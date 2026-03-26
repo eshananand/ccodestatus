@@ -26,14 +26,14 @@ No Node.js. No npm. No package managers.
 ### 1. Download the script
 
 ```bash
-curl -o ~/.claude/ccstatus.sh https://raw.githubusercontent.com/eshananand-10/ccodestatus/main/ccstatus.sh
+curl -o ~/.claude/ccstatus.sh https://raw.githubusercontent.com/eshananand/ccodestatus/main/ccstatus.sh
 chmod +x ~/.claude/ccstatus.sh
 ```
 
 Or clone and copy:
 
 ```bash
-git clone https://github.com/eshananand-10/ccodestatus.git
+git clone https://github.com/eshananand/ccodestatus.git
 cp ccodestatus/ccstatus.sh ~/.claude/ccstatus.sh
 chmod +x ~/.claude/ccstatus.sh
 ```
@@ -42,17 +42,25 @@ chmod +x ~/.claude/ccstatus.sh
 
 Edit `~/.claude/settings.json` and add or update the `statusLine` section:
 
+First, find your absolute path:
+
+```bash
+echo "$HOME/.claude/ccstatus.sh"
+```
+
+Then edit `~/.claude/settings.json` and use that path:
+
 ```json
 {
   "statusLine": {
     "type": "command",
-    "command": "/absolute/path/to/.claude/ccstatus.sh",
+    "command": "/Users/yourname/.claude/ccstatus.sh",
     "padding": 0
   }
 }
 ```
 
-**Important:** Use the full absolute path (e.g., `/Users/yourname/.claude/ccstatus.sh`), not `~`.
+> **Replace `/Users/yourname/`** with your actual home directory. You must use the full absolute path — `~` will not work.
 
 ### 3. Restart Claude Code
 
