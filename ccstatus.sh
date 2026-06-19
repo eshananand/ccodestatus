@@ -10,9 +10,8 @@ if [[ -z "$raw" ]]; then
   exit 0
 fi
 
-# --- Stage 1: JSON parsing via temp Python file ---
-tmp_py=$(mktemp /tmp/ccstatus.XXXXXX.py)
-cat > "$tmp_py" << 'PYEOF'
+# --- Stage 1: JSON parsing via inline Python (no temp file) ---
+pycode=$(cat << 'PYEOF'
 import json, sys
 try:
     d = json.load(sys.stdin)
@@ -55,9 +54,9 @@ fields = [
 ]
 print("|".join(fields))
 PYEOF
+)
 
-parsed=$(echo "$raw" | python3 "$tmp_py")
-rm -f "$tmp_py"
+parsed=$(printf '%s' "$raw" | python3 -c "$pycode")
 
 if [[ "$parsed" == "ERROR" ]]; then
   echo "ccstatus: parse error"
